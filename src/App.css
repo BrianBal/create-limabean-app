@@ -1,0 +1,34 @@
+.Limabeans {
+    height: 30vw;
+    aspect-ratio: 1;
+    pointer-events: none;
+    background-color: #334433;
+    background-size: cover;
+    display: inline-block;
+    border-radius: 10%;
+    overflow: hidden;
+    margin: 32px 0;
+}
+
+.Limabeans img {
+    height: 30vw;
+    aspect-ratio: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .Limabeans img {
+        animation: spin infinite 60s linear;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg) scale(1.5, 1.5);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.75, 1.75);
+    }
+    100% {
+        transform: rotate(360deg) scale(1.5, 1.5);
+    }
+}
