@@ -1,6 +1,6 @@
-const { execSync } = require("child_process")
-const path = require("path")
-const fs = require("fs")
+import { execSync } from "child_process"
+import path from "path"
+import fs from "fs"
 
 if (process.argv.length < 3) {
     console.log("You have to provide a name to your app.")
@@ -22,7 +22,7 @@ try {
             `The file ${projectName} already exist in the current directory, please give it another name.`
         )
     } else {
-        console.log(error)
+        console.log(err)
     }
     process.exit(1)
 }
@@ -38,8 +38,39 @@ async function main() {
         console.log("Installing dependencies...")
         execSync("npm install")
 
-        console.log("Removing useless files")
-        fs.rmdirSync(path.join(projectPath, "bin"), { recursive: true })
+        console.log("Updating package.json...")
+        const packageJsonPath = path.join(projectPath, "package.json")
+        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"))
+
+        // Remove bin attribute
+        delete packageJson.bin
+
+        // Update name to projectName
+        packageJson.name = projectName
+
+        // Update author with information from git
+        try {
+            const gitUserName = execSync("git config user.name")
+                .toString()
+                .trim()
+            const gitUserEmail = execSync("git config user.email")
+                .toString()
+                .trim()
+            packageJson.author = `${gitUserName} <${gitUserEmail}>`
+        } catch (error) {
+            console.log(
+                "Unable to retrieve git user information. Skipping author update."
+            )
+        }
+
+        // update package
+        fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
+
+        // remove generate-app.js
+        fs.unlinkSync(path.join(projectPath, "generate-app.js"))
+
+        // do first build so that types are generated
+        execSync("npm build")
 
         console.log("The installation is done, this is ready to use !")
     } catch (error) {
