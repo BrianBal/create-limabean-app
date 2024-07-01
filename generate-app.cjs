@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { execSync } = require("child_process")
 const path = require("path")
 const fs = require("fs")
@@ -67,7 +68,7 @@ async function main() {
         fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
         // remove generate-app.js
-        fs.unlinkSync(path.join(projectPath, "generate-app.js"))
+        fs.unlinkSync(path.join(projectPath, "generate-app.cjs"))
 
         // do first build so that types are generated
         execSync("npm run build", { cwd: projectPath })
