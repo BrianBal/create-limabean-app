@@ -11,7 +11,7 @@
         "start": "vite",
         "test": "vitest run --environment jsdom",
         "test:coverage": "vitest run --environment jsdom --coverage",
-        "build": "vite build && node scripts/post-build.cjs",
+        "build": "vite build && node scripts/post-build.js",
         "lint": "eslint .",
         "format": "prettier --write ."
     },

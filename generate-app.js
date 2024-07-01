@@ -70,7 +70,7 @@ async function main() {
         fs.unlinkSync(path.join(projectPath, "generate-app.js"))
 
         // do first build so that types are generated
-        execSync("npm build")
+        execSync("npm run build", { cwd: projectPath })
 
         console.log("The installation is done, this is ready to use !")
     } catch (error) {
