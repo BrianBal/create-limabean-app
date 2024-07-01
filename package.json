@@ -1,6 +1,6 @@
 {
     "name": "create-limabean-app",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "A CLI tool to generate limabean apps",
     "type": "module",
     "module": "src/index.ts",
